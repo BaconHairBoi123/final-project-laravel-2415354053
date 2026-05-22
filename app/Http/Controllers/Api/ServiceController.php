@@ -186,4 +186,23 @@ class ServiceController extends Controller
         'data' => $services
     ]);
 }
+public function changeStatus(
+    Request $request,
+    Service $service
+): JsonResponse {
+
+    $request->validate([
+        'status' => ['required']
+    ]);
+
+    $service->update([
+        'status' => $request->status
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Status updated successfully',
+        'data' => $service
+    ]);
+}
 }

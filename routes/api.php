@@ -22,3 +22,8 @@ Route::get(
     'services/status/{status}',
     [ServiceController::class, 'getByStatus']
 );
+
+Route::patch(
+    'services/{service}/change-status',
+    [ServiceController::class, 'changeStatus']
+);
