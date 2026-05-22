@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\SubscriptionController;
+use App\Http\Controllers\Api\UserController;
 
 Route::apiResource('services', ServiceController::class);
 Route::patch('services/{service}/activate', [
@@ -25,3 +26,4 @@ Route::patch(
     'subscriptions/{subscription}/change-status',
     [SubscriptionController::class, 'changeStatus']
 );
+Route::apiResource('users', UserController::class);
