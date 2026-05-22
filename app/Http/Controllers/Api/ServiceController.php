@@ -175,4 +175,15 @@ class ServiceController extends Controller
             'data' => $service,
         ]);
     }
+    public function getByStatus(string $status): JsonResponse
+{
+    $services = Service::query()
+        ->where('status', $status)
+        ->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => $services
+    ]);
+}
 }
