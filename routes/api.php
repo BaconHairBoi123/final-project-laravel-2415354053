@@ -14,14 +14,9 @@ Route::patch('services/{service}/deactivate', [
     ServiceController::class, 
     'deactivate',
 ]);
-Route::apiResource('subscriptions', SubscriptionController::class);
 
 Route::get(
     'services/status/{status}',
     [ServiceController::class, 'getByStatus']
 );
 
-Route::patch(
-    'subscriptions/{subscription}/change-status',
-    [SubscriptionController::class, 'changeStatus']
-);
