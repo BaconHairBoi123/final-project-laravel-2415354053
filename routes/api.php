@@ -24,6 +24,6 @@ Route::get(
 );
 
 Route::patch(
-    'services/{service}/change-status',
-    [ServiceController::class, 'changeStatus']
+    'subscriptions/{subscription}/change-status',
+    [SubscriptionController::class, 'changeStatus']
 );

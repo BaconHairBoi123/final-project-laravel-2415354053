@@ -108,4 +108,23 @@ class SubscriptionController extends Controller
             'message' => 'Subscription deleted successfully',
         ]);
     }
+public function changeStatus(
+    Request $request,
+    Subscription $subscription
+): JsonResponse {
+
+    $request->validate([
+        'status' => ['required']
+    ]);
+
+    $subscription->update([
+        'status' => $request->status
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Subscription status updated',
+        'data' => $subscription
+    ]);
+}
 }
