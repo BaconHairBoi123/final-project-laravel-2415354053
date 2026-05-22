@@ -16,3 +16,4 @@ Route::patch('services/{service}/deactivate', [
     ServiceController::class, 
     'deactivate',
 ]);
+Route::apiResource('subscriptions', SubscriptionController::class);
