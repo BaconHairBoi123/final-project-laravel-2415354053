@@ -20,3 +20,8 @@ Route::get(
     [ServiceController::class, 'getByStatus']
 );
 
+Route::apiResource('subscriptions', SubscriptionController::class);
+Route::patch(
+    'subscriptions/{subscription}/change-status',
+    [SubscriptionController::class, 'changeStatus']
+);
