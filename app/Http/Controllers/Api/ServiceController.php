@@ -18,7 +18,7 @@ class ServiceController extends Controller
         $query = Service::query();
 
         if ($status !== null){
-            if (!in_array($status, ['active', 'inactive'], true)) {
+            if (!in_array($status, ['active', 'deactivate'], true)) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Validation failed',
@@ -175,4 +175,34 @@ class ServiceController extends Controller
             'data' => $service,
         ]);
     }
+    public function getByStatus(string $status): JsonResponse
+{
+    $services = Service::query()
+        ->where('status', $status)
+        ->get();
+
+    return response()->json([
+        'success' => true,
+        'data' => $services
+    ]);
+}
+public function changeStatus(
+    Request $request,
+    Service $service
+): JsonResponse {
+
+    $request->validate([
+        'status' => ['required']
+    ]);
+
+    $service->update([
+        'status' => $request->status
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Status updated successfully',
+        'data' => $service
+    ]);
+}
 }
