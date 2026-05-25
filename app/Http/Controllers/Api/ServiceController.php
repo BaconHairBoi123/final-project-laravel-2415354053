@@ -18,7 +18,7 @@ class ServiceController extends Controller
         $query = Service::query();
 
         if ($status !== null){
-            if (!in_array($status, ['active', 'inactive'], true)) {
+            if (!in_array($status, ['active', 'deactivate'], true)) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Validation failed',
