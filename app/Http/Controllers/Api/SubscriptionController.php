@@ -80,6 +80,14 @@ class SubscriptionController extends Controller
             'status' => ['sometimes'],
         ]);
 
+        if (isset($data['status']) && strtolower((string)$subscription->status) === 'dismantle' && strtolower((string)$data['status']) !== 'dismantle') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Status Subscription yang saat ini dismantle tidak bisa diubah ke status lain.',
+                'errors' => [],
+            ], 422);
+        }
+
         $subscription->update($data);
 
         return response()->json([
@@ -116,6 +124,14 @@ public function changeStatus(
     $request->validate([
         'status' => ['required']
     ]);
+
+    if (strtolower((string)$subscription->status) === 'dismantle' && strtolower((string)$request->status) !== 'dismantle') {
+        return response()->json([
+            'success' => false,
+            'message' => 'Status Subscription yang saat ini dismantle tidak bisa diubah ke status lain.',
+            'errors' => [],
+        ], 422);
+    }
 
     $subscription->update([
         'status' => $request->status
