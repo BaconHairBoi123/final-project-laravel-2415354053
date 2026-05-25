@@ -23,6 +23,9 @@ class User extends Authenticatable
     'email',
     'password',
     'phone',
+    'address',
+    'status',
+    'customer_id',
 ];
 
     /**
@@ -46,5 +49,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function subscriptions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Subscription::class, 'customer_id');
     }
 }

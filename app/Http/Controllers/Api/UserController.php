@@ -29,9 +29,13 @@ class UserController extends Controller
         'email' => ['required'],
         'phone' => ['required'],
         'password' => ['required'],
+        'address' => ['nullable', 'string'],
+        'status' => ['nullable', 'boolean'],
+        'customer_id' => ['required', 'integer'],
     ]);
 
     $data['password'] = bcrypt($data['password']);
+    $data['status'] = $data['status'] ?? true;
 
     $user = User::query()->create($data);
 
@@ -61,6 +65,9 @@ class UserController extends Controller
             'name' => ['sometimes'],
             'email' => ['sometimes'],
             'phone' => ['sometimes'],
+            'address' => ['sometimes', 'string'],
+            'status' => ['sometimes', 'boolean'],
+            'customer_id' => ['sometimes', 'integer'],
         ]);
 
         $user->update($data);
@@ -75,6 +82,15 @@ class UserController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $user = User::query()->findOrFail($id);
+
+        if ($user->subscriptions()->exists()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cannot delete customer because they have active subscriptions',
+                'errors' => [],
+            ], 422);
+        }
+
         $user->delete();
 
         return response()->json([
