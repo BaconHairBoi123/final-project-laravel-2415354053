@@ -82,6 +82,15 @@ class UserController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $user = User::query()->findOrFail($id);
+
+        if ($user->subscriptions()->exists()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cannot delete customer because they have active subscriptions',
+                'errors' => [],
+            ], 422);
+        }
+
         $user->delete();
 
         return response()->json([
